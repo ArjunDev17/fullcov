@@ -1,3 +1,5 @@
+![Go CI](https://github.com/<your-username>/fullcov/actions/workflows/ci.yml/badge.svg)
+
 # Full Test Coverage in Go ✅
 
 This project demonstrates how to write Go code with **100% test coverage**, including:
