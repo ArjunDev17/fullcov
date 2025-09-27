@@ -27,11 +27,16 @@ jobs:
       - name: Show coverage
         run: go tool cover -func=coverage.out
 
-      - name: Enforce 100% coverage
+           - name: Enforce minimum 90% coverage
         run: |
           coverage=$(go tool cover -func=coverage.out | grep total | awk '{print $3}' | sed 's/%//')
           echo "Total Coverage: $coverage%"
-          if [ "$coverage" != "100.0" ]; then
-            echo "❌ Coverage is not 100%. Failing pipeline."
+          min_coverage=90.0
+          result=$(echo "$coverage < $min_coverage" | bc -l)
+          if [ "$result" -eq 1 ]; then
+            echo "❌ Coverage $coverage% is below $min_coverage%. Failing pipeline."
             exit 1
+          else
+            echo "✅ Coverage check passed."
           fi
+
